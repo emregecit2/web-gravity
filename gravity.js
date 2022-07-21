@@ -1,7 +1,12 @@
-var ball = document.getElementById('ball');
+var canvas = document.getElementById("myCanvas");
+var context =  canvas.getContext("2d");
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
 
-function myFunction(){
-  ball.style.left = parseInt(ball.style.left) + 1;
+function drawCircle(event){
+  context.beginPath();
+  context.arc(event.x, event.y, 50, 0, 2 * Math.PI);
+  context.stroke();
 }
 
-setInterval(myFunction, 1);
+document.addEventListener("click", drawCircle);
