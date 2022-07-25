@@ -1,12 +1,21 @@
-var canvas = document.getElementById("myCanvas");
-var context =  canvas.getContext("2d");
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-function drawCircle(event){
-  context.beginPath();
-  context.arc(event.x, event.y, 50, 0, 2 * Math.PI);
-  context.stroke();
+class Ball {
+  static balls = [];
+  static radius = 20;
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
+    const ball = document.createElement("div");
+    ball.className = "ball";
+    ball.style.left = x - Ball.radius+ "px";
+    ball.style.top = y - Ball.radius + "px";
+    document.getElementById('c').appendChild(ball);
+  }
 }
 
-document.addEventListener("click", drawCircle);
+function newBall(event) {
+  Ball.balls.push(new Ball(event.clientX, event.clientY));
+}
+
+
+
+document.addEventListener("click", newBall);
