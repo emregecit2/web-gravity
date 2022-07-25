@@ -3,3 +3,13 @@
     position: absolute;
     background: white;
 }
+
+.ball.animated {
+    animation: colorchange 1s; 
+}
+
+  
+@keyframes colorchange {
+    0%   {background-color: red;}
+    100% {background-color: white;}
+}

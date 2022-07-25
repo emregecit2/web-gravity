@@ -14,6 +14,9 @@ class Ball {
     ball.style.height = 2 * this.radius + "px";
     document.getElementById("canvas").appendChild(ball);
     this.image = ball;
+    this.image.classList.remove("animated");
+    this.image.offsetWidth
+    this.image.classList.add("animated");
     this.display();
   }
   move() {
@@ -24,6 +27,7 @@ class Ball {
   display() {
     this.image.style.left = this.coordinates[0] - this.radius + "px";
     this.image.style.top = this.coordinates[1] - this.radius + "px";
+    console.log(this.image.style.backgroundColor);
   }
   static moveBalls() {
     for (let i = 0; i < balls.length; i++) {
@@ -42,6 +46,15 @@ class Ball {
           let vectorB = math.multiply(vectorA, distance_between_edges / distance / (balls[i].mass + balls[j].mass));
           balls[i].coordinates = math.add(balls[i].coordinates, vectorB);
           balls[j].coordinates = math.subtract(balls[j].coordinates, vectorB);
+
+          // color to red
+          balls[i].image.classList.remove("animated");
+          balls[i].image.offsetWidth
+          balls[i].image.classList.add("animated");
+          balls[j].image.classList.remove("animated");
+          balls[j].image.offsetWidth
+          balls[j].image.classList.add("animated");
+          
         }
         
         // gravitational force
