@@ -7,7 +7,6 @@ class Ball {
     this.velocity = [0, 0];
     this.acceleration = [0, 0];
     this.radius = 20;
-    this.mass = 20;
     const ball = document.createElement("div");
     ball.className = "ball";
     ball.style.width = 2 * this.radius + "px";
@@ -39,11 +38,11 @@ class Ball {
 
         if (distance_between_edges < 0) {
           // elastic collision
-          let vectorC = math.multiply(vectorA, math.subtract(balls[i].velocity, balls[j].velocity), vectorA, 2 / (distance_squared * (balls[i].mass + balls[j].mass)));
-          balls[i].velocity = math.subtract(balls[i].velocity, math.multiply(vectorC, balls[j].mass));
-          balls[j].velocity = math.add(balls[j].velocity, math.multiply(vectorC, balls[i].mass));
+          let vectorC = math.multiply(vectorA, math.subtract(balls[i].velocity, balls[j].velocity), vectorA, 2 / (distance_squared * (balls[i].mass() + balls[j].mass())));
+          balls[i].velocity = math.subtract(balls[i].velocity, math.multiply(vectorC, balls[j].mass()));
+          balls[j].velocity = math.add(balls[j].velocity, math.multiply(vectorC, balls[i].mass()));
           // push away
-          let vectorB = math.multiply(vectorA, distance_between_edges / distance / (balls[i].mass + balls[j].mass));
+          let vectorB = math.multiply(vectorA, distance_between_edges / distance / (balls[i].mass() + balls[j].mass()));
           balls[i].coordinates = math.add(balls[i].coordinates, vectorB);
           balls[j].coordinates = math.subtract(balls[j].coordinates, vectorB);
 
@@ -58,7 +57,7 @@ class Ball {
         }
         
         // gravitational force
-        let vectorB = math.multiply(vectorA, balls[i].mass, balls[j].mass, 1 / math.pow(distance, 3));
+        let vectorB = math.multiply(vectorA, balls[i].mass(), balls[j].mass(), 1 / math.pow(distance, 3));
         balls[i].acceleration = math.add(balls[i].acceleration, vectorB);
         balls[j].acceleration = math.subtract(balls[j].acceleration, vectorB);
       }
@@ -66,6 +65,9 @@ class Ball {
     
     balls.forEach(ball => ball.move());
     balls.forEach(ball => ball.display());
+  }
+  mass(){
+    return this.radius**3 / 200;
   }
 }
 
@@ -91,4 +93,6 @@ function deleteBall(event) {
 
 document.addEventListener("click", click);
 document.addEventListener("contextmenu", deleteBall);
+document.addEventListener('contextmenu', event => event.preventDefault());
+
 setInterval(Ball.moveBalls, DT);
