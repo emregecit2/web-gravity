@@ -1,13 +1,13 @@
-const DT = 1;
+const DT = 0.1;
 
+balls = [];
 class Ball {
-  static balls = [];
   constructor(x, y) {
     this.coordinates = [x, y];
     this.velocity = [0, 0];
     this.acceleration = [0, 0];
     this.radius = 20;
-    this.mass = 1;
+    this.mass = 20;
     const ball = document.createElement("div");
     ball.className = "ball";
     ball.style.width = 2 * this.radius + "px";
@@ -26,24 +26,56 @@ class Ball {
     this.image.style.top = this.coordinates[1] - this.radius + "px";
   }
   static moveBalls() {
-    for (let i = 0; i < Ball.balls.length; i++) {
-      for (let j = i+1; j < Ball.balls.length; j++) {
-        let vectorA = math.subtract(Ball.balls[i].coordinates, Ball.balls[j].coordinates);
-        let distance = math.norm(vectorA) - Ball.balls[i].radius - Ball.balls[j].radius;
-        let vectorB = math.multiply(vectorA, Ball.balls[i].mass, Ball.balls[j].mass, 1 / math.pow(distance, 3));
-        Ball.balls[i].acceleration = math.subtract(Ball.balls[i].acceleration, vectorB);
-        Ball.balls[j].acceleration = math.add(Ball.balls[j].acceleration, vectorB);
+    for (let i = 0; i < balls.length; i++) {
+      for (let j = i+1; j < balls.length; j++) {
+        let vectorA = math.subtract(balls[j].coordinates, balls[i].coordinates);
+        let distance_squared = math.sum(math.dotPow(vectorA, 2));
+        let distance = math.sqrt(distance_squared);
+        let distance_between_edges = distance - balls[i].radius - balls[j].radius;
+
+        if (distance_between_edges < 0) {
+          // elastic collision
+          let vectorC = math.multiply(vectorA, math.subtract(balls[i].velocity, balls[j].velocity), vectorA, 2 / (distance_squared * (balls[i].mass + balls[j].mass)));
+          balls[i].velocity = math.subtract(balls[i].velocity, math.multiply(vectorC, balls[j].mass));
+          balls[j].velocity = math.add(balls[j].velocity, math.multiply(vectorC, balls[i].mass));
+          // push away
+          let vectorB = math.multiply(vectorA, distance_between_edges / distance / (balls[i].mass + balls[j].mass));
+          balls[i].coordinates = math.add(balls[i].coordinates, vectorB);
+          balls[j].coordinates = math.subtract(balls[j].coordinates, vectorB);
+        }
+        
+        // gravitational force
+        let vectorB = math.multiply(vectorA, balls[i].mass, balls[j].mass, 1 / math.pow(distance, 3));
+        balls[i].acceleration = math.add(balls[i].acceleration, vectorB);
+        balls[j].acceleration = math.subtract(balls[j].acceleration, vectorB);
       }
     }
     
-    Ball.balls.forEach(ball => ball.move());
-    Ball.balls.forEach(ball => ball.display());
+    balls.forEach(ball => ball.move());
+    balls.forEach(ball => ball.display());
   }
 }
 
-function newBall(event) {
-  Ball.balls.push(new Ball(event.clientX, event.clientY));
+function click(event) {
+  for (ball of balls) {
+    if (ball.image.contains(event.target)) {
+      ball.velocity = [0, 0];
+      ball.acceleration = [0, 0];
+      return;
+    }
+  }
+  balls.push(new Ball(event.x, event.y));
 }
 
-document.addEventListener("click", newBall);
+function deleteBall(event) {
+  for (ball of balls) {
+    if (ball.image.contains(event.target)) {
+      balls.splice(balls.indexOf(ball), 1);
+      ball.image.remove();
+    }
+  }
+}
+
+document.addEventListener("click", click);
+document.addEventListener("contextmenu", deleteBall);
 setInterval(Ball.moveBalls, DT);
