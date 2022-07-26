@@ -2,7 +2,6 @@ var RADIUS = 50;
 
 document.ontouchstart = function(event) {
   cursor = event.changedTouches[0];
-  console.log(event.changedTouches.length);
   for (ball of balls) {
     if (ball.image.contains(event.target)) {
       return;
