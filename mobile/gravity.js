@@ -160,7 +160,7 @@ document.onwheel = function(event) {
   }
 }
 
-document.onmouseup = function(event) {
+document.ontouchend = function(event) {
   switch (event.button){
     case 0:
     heldball = null;
@@ -169,7 +169,7 @@ document.onmouseup = function(event) {
       rightclick = false;
     }
 }
-document.onmousemove = function (event) {cursor = event;};
+document.ontouchmove = function (event) {cursor = event;};
 document.oncontextmenu = function (event) {
   event.preventDefault();
 }
