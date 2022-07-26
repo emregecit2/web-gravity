@@ -87,8 +87,8 @@ function main() {
       let distance_squared = math.sum(math.dotPow(vectorA, 2));
       let distance = math.sqrt(distance_squared);
       let distance_between_edges = distance - ball1.radius - ball2.radius;
-
-      if (distance_between_edges < 0) {
+      
+      if (distance_between_edges <= 0) {
         // elastic collision
         let vectorC = math.multiply(vectorA, math.subtract(ball1.velocity, ball2.velocity), vectorA, 2 / (distance_squared * (ball1.mass() + ball2.mass())));
         ball1.velocity = math.subtract(ball1.velocity, math.multiply(vectorC, ball2.mass()));
