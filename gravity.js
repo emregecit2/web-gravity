@@ -8,7 +8,7 @@ class Ball {
     this.coordinates = [x, y];
     this.velocity = [0, 0];
     this.force = [0, 0];
-    this.radius = 20;
+    this.radius = 50;
     const ball = document.createElement("div");
     ball.className = "ball";
     ball.style.width = 2 * this.radius + "px";
@@ -25,8 +25,9 @@ class Ball {
       this.coordinates = [cursor.x, cursor.y];
       ball.velocity = [0, 0];
     }
-    this.coordinates = math.add(this.coordinates, math.multiply(DT, this.velocity), math.multiply(DT**2, this.force));
-    this.velocity = math.add(this.velocity, math.multiply(this.force, DT / this.mass()));
+    let acceleration = math.multiply(this.force, 1 / this.mass());
+    this.coordinates = math.add(this.coordinates, math.multiply(DT, this.velocity), math.multiply(DT**2, acceleration));
+    this.velocity = math.add(this.velocity, math.multiply(acceleration, DT));
     this.force = [0, 0];
 
     // reflecting from walls
@@ -55,7 +56,7 @@ class Ball {
     this.image.style.width = 2 * this.radius + "px";
   }
   mass(){
-    return this.radius**3 / 400;
+    return this.radius**3 / 100;
   }
 }
 
