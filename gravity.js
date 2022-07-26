@@ -1,6 +1,7 @@
 const DT = 0.1;
 var heldball = null;
-var cursor = {x: 0, y: 0};
+var rightclick = false;
+var cursor;
 var balls = [];
 class Ball {
   constructor(x, y) {
@@ -34,11 +35,19 @@ class Ball {
     this.image.style.width = 2 * this.radius + "px";
   }
   mass(){
-    return this.radius**3 / 200;
+    return this.radius**3 / 1000;
   }
 }
 
 function main() {
+  if (rightclick) {
+    for (ball of balls) {
+      if (ball.image.contains(cursor.target)) {
+        balls.splice(balls.indexOf(ball), 1);
+        ball.image.remove();
+      }
+    }
+  }
   for (let i = 0; i < balls.length; i++) {
     for (let j = i+1; j < balls.length; j++) {
       let vectorA = math.subtract(balls[j].coordinates, balls[i].coordinates);
@@ -81,37 +90,45 @@ function click(event) {
 }
 
 
-document.onmousedown = function(event) { 
-  for (ball of balls) {
-    if (ball.image.contains(event.target)) {
+document.onmousedown = function(event) {
+  switch (event.button){
+    case 0:
+      for (ball of balls) {
+        if (ball.image.contains(event.target)) {
+          heldball = ball;
+          return;
+        }
+      }
+      ball = new Ball(event.x, event.y);
       heldball = ball;
-      return;
-    }
+      balls.push(ball);
+      break;
+    case 2:
+      rightclick = true;
   }
-  ball = new Ball(event.x, event.y);
-  heldball = ball;
-  balls.push(ball);
 }
 
 document.onwheel = function(event) {
   for (ball of balls) {
     if (ball.image.contains(event.target)) {
-      ball.radius -= event.deltaY;
+      ball.radius -= event.deltaY / 10;
       return;
     }
   }
 }
 
-document.onmouseup = function() {heldball = null;}
-document.oncontextmenu = function (event) {event.preventDefault();}
-document.onmousemove = function (event) {cursor.x = event.x, cursor.y = event.y;};
-document.oncontextmenu = function (event) {
-  for (ball of balls) {
-    if (ball.image.contains(event.target)) {
-      balls.splice(balls.indexOf(ball), 1);
-      ball.image.remove();
+document.onmouseup = function(event) {
+  switch (event.button){
+    case 0:
+    heldball = null;
+    break;
+    case 2:
+      rightclick = false;
     }
-  }
+}
+document.onmousemove = function (event) {cursor = event;};
+document.oncontextmenu = function (event) {
+  event.preventDefault();
 }
 
 setInterval(main, DT);
