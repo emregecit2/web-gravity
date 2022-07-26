@@ -7,7 +7,7 @@ class Ball {
     this.coordinates = [x, y];
     this.velocity = [0, 0];
     this.force = [0, 0];
-    this.radius = 50;
+    this.radius = 100;
     const ball = document.createElement("div");
     ball.className = "ball";
     ball.style.width = 2 * this.radius + "px";
@@ -21,7 +21,7 @@ class Ball {
   }
   move() {
     if (heldball == this) {
-      this.coordinates = [cursor.x, cursor.y];
+      this.coordinates = [cursor.pageX, cursor.pageY];
       ball.velocity = [0, 0];
     }
     let acceleration = math.multiply(this.force, 1 / this.mass());
@@ -121,52 +121,6 @@ function main() {
   
   balls.forEach(ball => ball.move());
   balls.forEach(ball => ball.display());
-}
-
-document.onmousedown = function(event) {
-  cursor = event;
-  switch (event.button){
-    case 0:
-      for (ball of balls) {
-        if (ball.image.contains(event.target)) {
-          heldball = ball;
-          return;
-        }
-      }
-      ball = new Ball(event.x, event.y);
-      heldball = ball;
-      balls.push(ball);
-      break;
-    case 2:
-      rightclick = true;
-  }
-}
-
-document.onwheel = function(event) {
-  for (ball of balls) {
-    if (ball.image.contains(event.target)) {
-      ball.radius -= event.deltaY / 10;
-      if (ball.radius <= 0) {
-        balls.splice(balls.indexOf(ball), 1);
-        ball.image.remove();
-      }
-      return;
-    }
-  }
-}
-
-document.onmouseup = function(event) {
-  switch (event.button){
-    case 0:
-    heldball = null;
-    break;
-    case 2:
-      rightclick = false;
-    }
-}
-document.ontouchmove = function (event) {cursor = event;};
-document.oncontextmenu = function (event) {
-  event.preventDefault();
 }
 
 setInterval(main, DT);

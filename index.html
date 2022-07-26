@@ -1,13 +1,19 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <script type="text/javascript">
-            if (screen.width <= 699) {
-                document.location = "mobile/index.html";
+        <script src="https://unpkg.com/mathjs@11.0.1/lib/browser/math.js"></script>
+        <script src="./gravity.js"></script>
+        <link rel="stylesheet" href="./style.css">
+        <script>
+            if (screen.width < 700) {
+                document.write("<script src='./mobile.js'><\/script>");
             }
-            else {
-                document.location = "desktop/index.html";
+            else{
+                document.write("<script src='./desktop.js'><\/script>");
             }
         </script>
     </head>
+    <script src="./gravity.js"></script>
+<div id="canvas"></div>
+</body>
 </html>
