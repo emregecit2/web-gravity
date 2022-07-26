@@ -12,7 +12,6 @@ class Ball {
     ball.className = "ball";
     ball.style.width = 2 * this.radius + "px";
     ball.style.height = 2 * this.radius + "px";
-    console.log(document.getElementById("canvas"));
     document.getElementById("canvas").appendChild(ball);
     this.image = ball;
     this.image.classList.remove("animated");

@@ -1,9 +1,10 @@
 var RADIUS = 50;
 
 document.ontouchstart = function(event) {
-  cursor = event.changedTouches[0];
+  cursor = event.touches[event.touches.length - 1];
   for (ball of balls) {
     if (ball.image.contains(event.target)) {
+      ball.held = true;
       return;
     }
   }
@@ -26,10 +27,11 @@ document.onwheel = function(event) {
 
 document.ontouchend = function(event) {
   for (ball of balls) {
-    if (ball.image.contains(event.target)) {
+    if (math.norm(math.subtract(ball.coordinates, [event.changedTouches[event.changedTouches.length - 1].pageX, event.changedTouches[event.changedTouches.length - 1].pageY])) <= ball.radius) {
       ball.held = false;
     }
   }
+  console.log(event.changedTouches[event.changedTouches.length - 1].target);
 }
 document.ontouchmove = function (event) {cursor = event.changedTouches[event.changedTouches.length - 1];};
 document.oncontextmenu = function (event) {
