@@ -7,7 +7,7 @@ class Ball {
   constructor(x, y) {
     this.coordinates = [x, y];
     this.velocity = [0, 0];
-    this.acceleration = [0, 0];
+    this.force = [0, 0];
     this.radius = 20;
     const ball = document.createElement("div");
     ball.className = "ball";
@@ -25,9 +25,9 @@ class Ball {
       this.coordinates = [cursor.x, cursor.y];
       ball.velocity = [0, 0];
     }
-    this.coordinates = math.add(this.coordinates, math.multiply(DT, this.velocity), math.multiply(DT**2, this.acceleration));
-    this.velocity = math.add(this.velocity, math.multiply(this.acceleration, DT));
-    this.acceleration = [0, 0];
+    this.coordinates = math.add(this.coordinates, math.multiply(DT, this.velocity), math.multiply(DT**2, this.force));
+    this.velocity = math.add(this.velocity, math.multiply(this.force, DT / this.mass()));
+    this.force = [0, 0];
 
     // reflecting from walls
     if (this.coordinates[0] - this.radius <= 0) {
@@ -55,7 +55,7 @@ class Ball {
     this.image.style.width = 2 * this.radius + "px";
   }
   mass(){
-    return this.radius**3 / 1000;
+    return this.radius**3 / 400;
   }
 }
 
@@ -113,9 +113,9 @@ function main() {
       }
       
       // gravitational force
-      let vectorB = math.multiply(vectorA, ball1.mass(), ball2.mass(), 1 / math.pow(distance, 3));
-      ball1.acceleration = math.add(ball1.acceleration, vectorB);
-      ball2.acceleration = math.subtract(ball2.acceleration, vectorB);
+      let force = math.multiply(vectorA, ball1.mass(), ball2.mass(), 1 / math.pow(distance, 3));
+      ball1.force = math.add(ball1.force, force);
+      ball2.force = math.subtract(ball2.force, force);
     }
   }
   
@@ -151,7 +151,7 @@ document.onwheel = function(event) {
     if (ball.image.contains(event.target)) {
       ball.radius -= event.deltaY / 10;
       if (ball.radius <= 0) {
-        ball.splice(balls.indexOf(ball), 1);
+        balls.splice(balls.indexOf(ball), 1);
         ball.image.remove();
       }
       return;
