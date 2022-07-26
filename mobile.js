@@ -1,14 +1,14 @@
 var RADIUS = 50;
 
 document.ontouchstart = function(event) {
-  cursor = event.touches[event.touches.length - 1];
+  cursor = event.touches;
   for (ball of balls) {
     if (ball.image.contains(event.target)) {
       ball.held = true;
       return;
     }
   }
-  ball = new Ball(cursor.pageX, cursor.pageY);
+  ball = new Ball(cursor[cursor.length - 1].pageX, cursor[cursor.length - 1].pageY);
   balls.push(ball);
 }
 
@@ -33,7 +33,7 @@ document.ontouchend = function(event) {
   }
   console.log(event.changedTouches[event.changedTouches.length - 1].target);
 }
-document.ontouchmove = function (event) {cursor = event.changedTouches[event.changedTouches.length - 1];};
+document.ontouchmove = function (event) {cursor = event.touches;};
 document.oncontextmenu = function (event) {
   event.preventDefault();
 }

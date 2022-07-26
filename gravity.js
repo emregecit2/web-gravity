@@ -16,12 +16,11 @@ class Ball {
     this.image = ball;
     this.image.classList.remove("animated");
     this.image.offsetWidth;
-    this.image.classList.add("animated");
     this.display();
   }
   move() {
     if (this.held) {
-      this.coordinates = [cursor.pageX, cursor.pageY];
+      this.coordinates = [cursor[0].pageX, cursor[0].pageY];
       ball.velocity = [0, 0];
     }
     let acceleration = math.multiply(this.force, 1 / this.mass());
@@ -62,7 +61,7 @@ class Ball {
 function main() {
   if (rightclick) {
     for (ball of balls) {
-      if (ball.image.contains(cursor.target)) {
+      if (ball.image.contains(cursor[0].target)) {
         balls.splice(balls.indexOf(ball), 1);
         ball.image.remove();
       }
@@ -105,7 +104,7 @@ function main() {
 
         // color to red
         ball1.image.classList.remove("animated");
-        ball1.image.offsetWidth
+        ball1.image.offsetWidth;
         ball1.image.classList.add("animated");
         ball2.image.classList.remove("animated");
         ball2.image.offsetWidth

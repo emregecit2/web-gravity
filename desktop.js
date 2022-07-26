@@ -2,11 +2,12 @@ var RADIUS = 50;
 var heldball = null;
 
 document.onmousedown = function(event) {
-    cursor = event;
+    cursor = [event];
     switch (event.button){
       case 0:
         for (ball of balls) {
           if (ball.image.contains(event.target)) {
+            ball.held = true;
             heldball = ball;
             return;
           }
@@ -43,7 +44,7 @@ document.onmousedown = function(event) {
         rightclick = false;
       }
   }
-  document.onmousemove = function (event) {cursor = event;};
+  document.onmousemove = function (event) {cursor = [event];};
   document.oncontextmenu = function (event) {
     event.preventDefault();
   }
