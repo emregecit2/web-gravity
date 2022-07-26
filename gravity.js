@@ -98,8 +98,8 @@ function main() {
         }
         else{
           let vectorB = math.multiply(vectorA, distance_between_edges / distance / (ball1.mass() + ball2.mass()));
-          ball1.coordinates = math.add(ball1.coordinates, vectorB);
-          ball2.coordinates = math.subtract(ball2.coordinates, vectorB);  
+          ball1.coordinates = math.add(ball1.coordinates, math.multiply(ball2.mass(), vectorB));
+          ball2.coordinates = math.subtract(ball2.coordinates, math.multiply(ball1.mass(), vectorB));  
         }
 
         // color to red
