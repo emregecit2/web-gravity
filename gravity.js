@@ -27,6 +27,25 @@ class Ball {
     this.coordinates = math.add(this.coordinates, math.multiply(DT, this.velocity), math.multiply(DT**2, this.acceleration));
     this.velocity = math.add(this.velocity, math.multiply(this.acceleration, DT));
     this.acceleration = [0, 0];
+
+    // reflecting from walls
+    if (this.coordinates[0] - this.radius <= 0) {
+      this.coordinates[0] = this.radius;
+      this.velocity[0] = -this.velocity[0];
+    }
+    if (this.coordinates[0] + this.radius >= window.innerWidth) {
+      this.coordinates[0] = window.innerWidth - this.radius;
+      this.velocity[0] = -this.velocity[0];
+    }
+    if (this.coordinates[1] - this.radius <= 0) {
+      this.coordinates[1] = this.radius;
+      this.velocity[1] = -this.velocity[1];
+    }
+    if (this.coordinates[1] + this.radius >= window.innerHeight) {
+      this.coordinates[1] = window.innerHeight - this.radius;
+      this.velocity[1] = -this.velocity[1];
+    }
+
   }
   display() {
     this.image.style.left = this.coordinates[0] - this.radius + "px";
@@ -48,36 +67,54 @@ function main() {
       }
     }
   }
+
   for (let i = 0; i < balls.length; i++) {
     for (let j = i+1; j < balls.length; j++) {
-      let vectorA = math.subtract(balls[j].coordinates, balls[i].coordinates);
+      if (balls[j] == heldball) {
+        var ball1 = heldball;
+        var ball2 = balls[i];
+      }
+      else if (balls[i] == heldball) {
+        var ball1 = heldball;
+        var ball2 = balls[j];
+      }
+      else {
+        var ball1 = balls[i];
+        var ball2 = balls[j];
+      }
+      let vectorA = math.subtract(ball2.coordinates, ball1.coordinates);
       let distance_squared = math.sum(math.dotPow(vectorA, 2));
       let distance = math.sqrt(distance_squared);
-      let distance_between_edges = distance - balls[i].radius - balls[j].radius;
+      let distance_between_edges = distance - ball1.radius - ball2.radius;
 
       if (distance_between_edges < 0) {
         // elastic collision
-        let vectorC = math.multiply(vectorA, math.subtract(balls[i].velocity, balls[j].velocity), vectorA, 2 / (distance_squared * (balls[i].mass() + balls[j].mass())));
-        balls[i].velocity = math.subtract(balls[i].velocity, math.multiply(vectorC, balls[j].mass()));
-        balls[j].velocity = math.add(balls[j].velocity, math.multiply(vectorC, balls[i].mass()));
+        let vectorC = math.multiply(vectorA, math.subtract(ball1.velocity, ball2.velocity), vectorA, 2 / (distance_squared * (ball1.mass() + ball2.mass())));
+        ball1.velocity = math.subtract(ball1.velocity, math.multiply(vectorC, ball2.mass()));
+        ball2.velocity = math.add(ball2.velocity, math.multiply(vectorC, ball1.mass()));
         // push away
-        let vectorB = math.multiply(vectorA, distance_between_edges / distance / (balls[i].mass() + balls[j].mass()));
-        balls[i].coordinates = math.add(balls[i].coordinates, vectorB);
-        balls[j].coordinates = math.subtract(balls[j].coordinates, vectorB);
+        if (heldball == ball1) {
+          ball2.coordinates = math.subtract(ball2.coordinates, math.multiply(vectorA, distance_between_edges / distance));
+        }
+        else{
+          let vectorB = math.multiply(vectorA, distance_between_edges / distance / (ball1.mass() + ball2.mass()));
+          ball1.coordinates = math.add(ball1.coordinates, vectorB);
+          ball2.coordinates = math.subtract(ball2.coordinates, vectorB);  
+        }
 
         // color to red
-        balls[i].image.classList.remove("animated");
-        balls[i].image.offsetWidth
-        balls[i].image.classList.add("animated");
-        balls[j].image.classList.remove("animated");
-        balls[j].image.offsetWidth
-        balls[j].image.classList.add("animated");
+        ball1.image.classList.remove("animated");
+        ball1.image.offsetWidth
+        ball1.image.classList.add("animated");
+        ball2.image.classList.remove("animated");
+        ball2.image.offsetWidth
+        ball2.image.classList.add("animated");
       }
       
       // gravitational force
-      let vectorB = math.multiply(vectorA, balls[i].mass(), balls[j].mass(), 1 / math.pow(distance, 3));
-      balls[i].acceleration = math.add(balls[i].acceleration, vectorB);
-      balls[j].acceleration = math.subtract(balls[j].acceleration, vectorB);
+      let vectorB = math.multiply(vectorA, ball1.mass(), ball2.mass(), 1 / math.pow(distance, 3));
+      ball1.acceleration = math.add(ball1.acceleration, vectorB);
+      ball2.acceleration = math.subtract(ball2.acceleration, vectorB);
     }
   }
   
@@ -96,6 +133,7 @@ document.onmousedown = function(event) {
       for (ball of balls) {
         if (ball.image.contains(event.target)) {
           heldball = ball;
+          ball.velocity = [0, 0];
           return;
         }
       }
