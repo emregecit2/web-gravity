@@ -130,6 +130,7 @@ function click(event) {
 
 
 document.ontouchstart = function(event) {
+  document.body.textContent = "asckascm";
   switch (event.button){
     case 0:
       for (ball of balls) {
