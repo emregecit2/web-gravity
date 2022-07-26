@@ -16,5 +16,8 @@
 html { 
     background: url(20353650.jpg) no-repeat center fixed; 
     background-size: cover;
-    overscroll-behavior-y: contain;
+}
+
+body {
+    overscroll-behavior: contain;
 }
