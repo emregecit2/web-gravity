@@ -23,6 +23,7 @@ class Ball {
   move() {
     if (heldball == this) {
       this.coordinates = [cursor.x, cursor.y];
+      ball.velocity = [0, 0];
     }
     this.coordinates = math.add(this.coordinates, math.multiply(DT, this.velocity), math.multiply(DT**2, this.acceleration));
     this.velocity = math.add(this.velocity, math.multiply(this.acceleration, DT));
@@ -133,7 +134,6 @@ document.onmousedown = function(event) {
       for (ball of balls) {
         if (ball.image.contains(event.target)) {
           heldball = ball;
-          ball.velocity = [0, 0];
           return;
         }
       }
@@ -150,6 +150,10 @@ document.onwheel = function(event) {
   for (ball of balls) {
     if (ball.image.contains(event.target)) {
       ball.radius -= event.deltaY / 10;
+      if (ball.radius <= 0) {
+        ball.splice(balls.indexOf(ball), 1);
+        ball.image.remove();
+      }
       return;
     }
   }
