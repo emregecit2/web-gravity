@@ -3,15 +3,11 @@
     <head>
         <script type="text/javascript">
             if (screen.width <= 699) {
-                document.location = "mobile.html";
+                document.location = "mobile/index.html";
+            }
+            else {
+                document.location = "desktop/index.html";
             }
         </script>
-        <script src="https://unpkg.com/mathjs@11.0.1/lib/browser/math.js"></script>
-        <script src="./gravity.js"></script>
-        <link rel="stylesheet" href="./style.css">
     </head>
-<body style="background-color:black;">
-    <script src="./gravity.js"></script>
-<div id="canvas"></div>
-</body>
 </html>
