@@ -1,4 +1,4 @@
-var RADIUS = 200;
+var RADIUS = 50;
 
 document.ontouchstart = function(event) {
   cursor = event.touches[0];
