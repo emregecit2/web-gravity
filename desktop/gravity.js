@@ -1,7 +1,6 @@
-const DT = 0.1;
+var DT = 0.1;
 var heldball = null;
 var rightclick = false;
-var cursor;
 var balls = [];
 class Ball {
   constructor(x, y) {
@@ -124,12 +123,8 @@ function main() {
   balls.forEach(ball => ball.display());
 }
 
-function click(event) {
-  balls.push(new Ball(event.x, event.y));
-}
-
-
 document.onmousedown = function(event) {
+  cursor = event;
   switch (event.button){
     case 0:
       for (ball of balls) {
@@ -169,7 +164,7 @@ document.onmouseup = function(event) {
       rightclick = false;
     }
 }
-document.onmousemove = function (event) {cursor = event;};
+document.ontouchmove = function (event) {cursor = event;};
 document.oncontextmenu = function (event) {
   event.preventDefault();
 }

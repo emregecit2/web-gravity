@@ -1,8 +1,8 @@
-const DT = 0.1;
+var DT = 0.1;
 var heldball = null;
 var rightclick = false;
-var cursor;
 var balls = [];
+
 class Ball {
   constructor(x, y) {
     this.coordinates = [x, y];
@@ -22,7 +22,7 @@ class Ball {
   }
   move() {
     if (heldball == this) {
-      this.coordinates = [cursor.x, cursor.y];
+      this.coordinates = [cursor.touches[0].pageX, cursor.touches[0].pageY];
       ball.velocity = [0, 0];
     }
     let acceleration = math.multiply(this.force, 1 / this.mass());
@@ -124,28 +124,19 @@ function main() {
   balls.forEach(ball => ball.display());
 }
 
-function click(event) {
-  balls.push(new Ball(event.x, event.y));
-}
-
-
 document.ontouchstart = function(event) {
-  document.body.textContent = "asckascm";
-  switch (event.button){
-    case 0:
-      for (ball of balls) {
-        if (ball.image.contains(event.target)) {
-          heldball = ball;
-          return;
-        }
-      }
-      ball = new Ball(event.x, event.y);
+  cursor = event;
+  for (ball of balls) {
+    if (ball.image.contains(event.target)) {
       heldball = ball;
-      balls.push(ball);
-      break;
-    case 2:
-      rightclick = true;
+      return;
+    }
   }
+  var touch = event.touches[0];
+  console.log(touch.pageX, touch.pageY);
+  ball = new Ball(touch.pageX, touch.pageY);
+  heldball = ball;
+  balls.push(ball);
 }
 
 document.onwheel = function(event) {
@@ -162,13 +153,7 @@ document.onwheel = function(event) {
 }
 
 document.ontouchend = function(event) {
-  switch (event.button){
-    case 0:
-    heldball = null;
-    break;
-    case 2:
-      rightclick = false;
-    }
+  heldball = null;
 }
 document.ontouchmove = function (event) {cursor = event;};
 document.oncontextmenu = function (event) {
