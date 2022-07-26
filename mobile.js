@@ -1,3 +1,5 @@
+var RADIUS = 200;
+
 document.ontouchstart = function(event) {
   cursor = event.touches[0];
   for (ball of balls) {

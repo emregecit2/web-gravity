@@ -7,7 +7,7 @@ class Ball {
     this.coordinates = [x, y];
     this.velocity = [0, 0];
     this.force = [0, 0];
-    this.radius = 100;
+    this.radius = RADIUS;
     const ball = document.createElement("div");
     ball.className = "ball";
     ball.style.width = 2 * this.radius + "px";

@@ -1,3 +1,5 @@
+var RADIUS = 50;
+
 document.onmousedown = function(event) {
     cursor = event;
     switch (event.button){
