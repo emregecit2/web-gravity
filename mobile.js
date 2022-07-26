@@ -1,8 +1,8 @@
 var RADIUS = 50;
 
 document.ontouchstart = function(event) {
-  cursor = event.touches[0];
-  document.body.textContent = event.touches.length;
+  cursor = event.changedTouches[0];
+  document.body.textContent = event.changedTouches.length;
   for (ball of balls) {
     if (ball.image.contains(event.target)) {
       heldball = ball;

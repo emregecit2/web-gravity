@@ -1,4 +1,5 @@
 var RADIUS = 50;
+var heldball = null;
 
 document.onmousedown = function(event) {
     cursor = event;
@@ -35,8 +36,9 @@ document.onmousedown = function(event) {
   document.onmouseup = function(event) {
     switch (event.button){
       case 0:
-      heldball = null;
-      break;
+        heldball.held = false;
+        heldball = null;
+        break;
       case 2:
         rightclick = false;
       }

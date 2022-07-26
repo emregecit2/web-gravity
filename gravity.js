@@ -1,5 +1,4 @@
 var DT = 0.1;
-var heldball = null;
 var rightclick = false;
 var balls = [];
 class Ball {
@@ -8,6 +7,7 @@ class Ball {
     this.velocity = [0, 0];
     this.force = [0, 0];
     this.radius = RADIUS;
+    this.held = true;
     const ball = document.createElement("div");
     ball.className = "ball";
     ball.style.width = 2 * this.radius + "px";
@@ -20,7 +20,7 @@ class Ball {
     this.display();
   }
   move() {
-    if (heldball == this) {
+    if (this.held) {
       this.coordinates = [cursor.pageX, cursor.pageY];
       ball.velocity = [0, 0];
     }
@@ -71,12 +71,12 @@ function main() {
 
   for (let i = 0; i < balls.length; i++) {
     for (let j = i+1; j < balls.length; j++) {
-      if (balls[j] == heldball) {
-        var ball1 = heldball;
+      if (balls[j].held) {
+        var ball1 = balls[j];
         var ball2 = balls[i];
       }
-      else if (balls[i] == heldball) {
-        var ball1 = heldball;
+      else if (balls[i].held) {
+        var ball1 = balls[i];
         var ball2 = balls[j];
       }
       else {
@@ -94,7 +94,7 @@ function main() {
         ball1.velocity = math.subtract(ball1.velocity, math.multiply(vectorC, ball2.mass()));
         ball2.velocity = math.add(ball2.velocity, math.multiply(vectorC, ball1.mass()));
         // push away
-        if (heldball == ball1) {
+        if (ball1.held) {
           ball2.coordinates = math.subtract(ball2.coordinates, math.multiply(vectorA, distance_between_edges / distance));
         }
         else{
