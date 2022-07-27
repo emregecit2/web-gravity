@@ -5,16 +5,21 @@
 }
 
 .ball.animated {
-    animation: colorchange 1s; 
+    animation: colorchange 1s;
 }
 
 @keyframes colorchange {
-    0%   {background-color: red;}
-    100% {background-color: white;}
+    0% {
+        background-color: red;
+    }
+
+    100% {
+        background-color: white;
+    }
 }
 
-html { 
-    background: url(20353650.jpg) no-repeat center fixed; 
+html {
+    background: url(20353650.jpg) no-repeat center fixed;
     background-size: cover;
 }
 

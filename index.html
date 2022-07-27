@@ -1,21 +1,24 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Gravity</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-        <script src="https://unpkg.com/mathjs@11.0.1/lib/browser/math.js"></script>
-        <script>
-            if (screen.width < 700) {
-                document.write("<script src='./mobile.js'><\/script>");
-            }
-            else{
-                document.write("<script src='./desktop.js'><\/script>");
-            }
-        </script>
-        <script src="./gravity.js"></script>
-        <link rel="stylesheet" href="./style.css">
-    </head>
+
+<head>
+    <title>Gravity</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <script src="https://unpkg.com/mathjs@11.0.1/lib/browser/math.js"></script>
+    <script>
+        if (screen.width < 700) {
+            document.write("<script src='./mobile.js'><\/script>");
+        }
+        else {
+            document.write("<script src='./desktop.js'><\/script>");
+        }
+    </script>
+    <script src="./gravity.js"></script>
+    <link rel="stylesheet" href="./style.css">
+</head>
+
 <body>
-<div id="canvas"></div>
+    <div id="canvas"></div>
 </body>
+
 </html>
