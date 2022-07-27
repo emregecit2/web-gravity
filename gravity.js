@@ -1,7 +1,7 @@
 var DT = 1;
 var rightclick = false;
 var balls = [];
-var RADIUS = 50;
+var RADIUS = 30;
 // gravitational constant is increased for faster simulation
 const GRAVITATIONAL_CONSTANT = 1e-2
 
@@ -86,16 +86,13 @@ function main() {
   for (let i = 0; i < balls.length; i++) {
     for (let j = i + 1; j < balls.length; j++) {
       if (balls[j].held) {
-        var ball1 = balls[j];
-        var ball2 = balls[i];
+        var ball1 = balls[j], ball2 = balls[i];
       }
       else if (balls[i].held) {
-        var ball1 = balls[i];
-        var ball2 = balls[j];
+        var ball1 = balls[i], ball2 = balls[j];
       }
       else {
-        var ball1 = balls[i];
-        var ball2 = balls[j];
+        var ball1 = balls[i], ball2 = balls[j];
       }
       let vectorA = math.subtract(ball2.coordinates, ball1.coordinates);
       let distance_squared = math.sum(math.dotPow(vectorA, 2));

@@ -8,15 +8,15 @@ document.ontouchstart = function (event) {
     return;
   }
   ball = new Ball(touch.pageX, touch.pageY);
+  touch.timeStamp = event.timeStamp;
   ball.held = touch;
-  ball.held.timeStamp = event.timeStamp;
 }
 
 document.ontouchend = function (event) {
   for (ball of balls) {
     if (ball.held && (ball.held.identifier == event.changedTouches[0].identifier)) {
-      ball.velocity = [(ball.held.pageX - ball.lastheld.pageX) / (ball.held.timeStamp - ball.lastheld.timeStamp), (ball.held.pageY - ball.lastheld.pageY) / (ball.held.timeStamp - ball.lastheld.timeStamp)];
-      ball.held = false;
+      if (ball.lastheld) ball.velocity = [(ball.held.pageX - ball.lastheld.pageX) / (ball.held.timeStamp - ball.lastheld.timeStamp), (ball.held.pageY - ball.lastheld.pageY) / (ball.held.timeStamp - ball.lastheld.timeStamp)];
+      ball.lastheld = ball.held = null;
     }
   }
 }

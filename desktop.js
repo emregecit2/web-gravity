@@ -37,8 +37,7 @@ document.onmousedown = function(event) {
     switch (event.button){
       case 0:
         heldball.velocity = [(event.x - lastcursor.x) / (event.timeStamp - lastcursor.timeStamp), (event.y - lastcursor.y) / (event.timeStamp - lastcursor.timeStamp)];
-        heldball.held = false;
-        heldball = null;
+        heldball.held = heldball = null;
         break;
       case 2:
         rightclick = false;
