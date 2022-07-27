@@ -1,7 +1,9 @@
 var heldball = null;
+var lastcursor = null;
 var cursor = null;
 
 document.onmousedown = function(event) {
+  lastcursor = cursor;
     cursor = event;
     switch (event.button){
       case 0:
@@ -34,6 +36,7 @@ document.onmousedown = function(event) {
   document.onmouseup = function(event) {
     switch (event.button){
       case 0:
+        heldball.velocity = [(event.x - lastcursor.x) / (event.timeStamp - lastcursor.timeStamp), (event.y - lastcursor.y) / (event.timeStamp - lastcursor.timeStamp)];
         heldball.held = false;
         heldball = null;
         break;
@@ -42,6 +45,7 @@ document.onmousedown = function(event) {
       }
   }
   document.onmousemove = function (event) {
+    lastcursor = cursor;
     cursor = event;
     if (heldball) {
       heldball.held = event;
