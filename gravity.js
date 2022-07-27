@@ -22,7 +22,7 @@ class Ball {
   move() {
     if (this.held) {
       this.coordinates = [cursor[0].pageX, cursor[0].pageY];
-      ball.velocity = [0, 0];
+      this.velocity = [0, 0];
     }
     let acceleration = math.multiply(this.force, 1 / this.mass());
     this.coordinates = math.add(this.coordinates, math.multiply(DT, this.velocity), math.multiply(DT ** 2, acceleration));
@@ -74,7 +74,10 @@ function findBall(event) {
 
 function main() {
   if (rightclick) {
-    findBall(cursor[0]).clear();
+    let ball = findBall(cursor[0]);
+    if (ball) {
+      ball.clear();
+    }
   }
 
   for (let i = 0; i < balls.length; i++) {

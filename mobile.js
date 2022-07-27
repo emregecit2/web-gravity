@@ -2,6 +2,9 @@ var RADIUS = 50;
 
 document.ontouchstart = function (event) {
   cursor = event.touches;
+  for (touch of event.touches) {
+    document.getElementById("info").innerHTML = document.getElementById("info").innerHTML + touch.identifier;
+  }
   let ball = findBall(event);
   if (ball) {
     ball.held = true;
@@ -16,7 +19,6 @@ document.ontouchend = function (event) {
       ball.held = false;
     }
   }
-  console.log(event.changedTouches[event.changedTouches.length - 1].target);
 }
 document.ontouchmove = function (event) { cursor = event.touches; };
 document.oncontextmenu = function (event) {
