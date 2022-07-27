@@ -1,7 +1,7 @@
 var DT = 1;
 var rightclick = false;
 var balls = [];
-var RADIUS = 20;
+var RADIUS = 50;
 // gravitational constant is increased for faster simulation
 const GRAVITATIONAL_CONSTANT = 1e-2
 
@@ -38,7 +38,7 @@ class Ball {
       this.velocity[0] = -this.velocity[0];
     }
     if (this.coordinates[0] + this.radius >= window.innerWidth) {
-      this.coordinates[0] = 2 * (window.innerWidth - this.radius) - this.coordinates[0];
+      this.coordinates[0] = 2 * (window.innerWidth - this.radius) - this.coordinates[0]; // coordinate = coordinate - (width - radius)
       this.velocity[0] = -this.velocity[0];
     }
     if (this.coordinates[1] - this.radius <= 0) {
