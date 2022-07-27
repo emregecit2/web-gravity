@@ -17,12 +17,3 @@
         background-color: white;
     }
 }
-
-html {
-    background: url(20353650.jpg) no-repeat center fixed;
-    background-size: cover;
-}
-
-body {
-    overscroll-behavior: contain;
-}
