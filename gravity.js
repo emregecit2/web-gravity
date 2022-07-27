@@ -58,6 +58,7 @@ class Ball {
     this.image.style.width = 2 * this.radius + "px";
   }
   mass() {
+    // density = 3 / 4pi
     return this.radius ** 3;
   }
   clear() {
