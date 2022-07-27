@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+    <div id="info"></div>
 
 <head>
     <title>Gravity</title>
@@ -8,9 +9,11 @@
     <script>
         if (screen.width < 700) {
             document.write("<script src='./mobile.js'><\/script>");
+            document.getElementById("info").innerHTML = "Mobile";
         }
         else {
             document.write("<script src='./desktop.js'><\/script>");
+            document.getElementById("info").innerHTML = "Desktop";
         }
     </script>
     <script src="./gravity.js"></script>
