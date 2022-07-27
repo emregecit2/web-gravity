@@ -1,9 +1,9 @@
 var RADIUS = 50;
 var heldball = null;
+var cursor = null;
 
 document.onmousedown = function(event) {
-    console.log(event);
-    cursor = [event];
+    cursor = event;
     switch (event.button){
       case 0:
         ball = findBall(event);
@@ -43,7 +43,7 @@ document.onmousedown = function(event) {
       }
   }
   document.onmousemove = function (event) {
-    cursor = [event];
+    cursor = event;
     if (heldball) {
       heldball.held = event;
     }

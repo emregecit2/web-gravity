@@ -1,6 +1,7 @@
 var DT = 0.1;
 var rightclick = false;
 var balls = [];
+
 class Ball {
   constructor(x, y) {
     this.coordinates = [x, y];
@@ -73,7 +74,7 @@ function findBall(event) {
 
 function main() {
   if (rightclick) {
-    let ball = findBall(cursor[0]);
+    let ball = findBall(cursor);
     if (ball) {
       ball.clear();
     }
