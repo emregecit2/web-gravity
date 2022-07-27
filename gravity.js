@@ -1,6 +1,7 @@
 var DT = 0.1;
 var rightclick = false;
 var balls = [];
+var RADIUS = 20;
 
 class Ball {
   constructor(x, y) {
@@ -55,7 +56,7 @@ class Ball {
     this.image.style.width = 2 * this.radius + "px";
   }
   mass() {
-    return this.radius ** 3 / 100;
+    return this.radius ** 3 / 20;
   }
   clear() {
     balls.splice(balls.indexOf(this), 1);

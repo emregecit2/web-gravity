@@ -1,4 +1,3 @@
-var RADIUS = 50;
 var heldball = null;
 var cursor = null;
 
