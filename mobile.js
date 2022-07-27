@@ -4,7 +4,7 @@ document.ontouchstart = function (event) {
   let touch = event.changedTouches[0];
   let ball = findBall(touch);
   if (ball) {
-    ball.held = event.changedTouches[0];
+    ball.held = touch;
     return;
   }
   ball = new Ball(touch.pageX, touch.pageY);
