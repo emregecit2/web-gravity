@@ -13,12 +13,10 @@ class Ball {
     this.radius = RADIUS;
     const ball = document.createElement("div");
     ball.className = "ball";
-    ball.style.width = 2 * this.radius + "px";
-    ball.style.height = 2 * this.radius + "px";
-    ball.classList.remove("animated");
-    ball.offsetWidth;
+    ball.style.height = ball.style.width = 2 * this.radius + "px";
     document.getElementById("canvas").appendChild(ball);
     this.image = ball;
+    this.collideanimation();
     this.display();
     balls.push(this);
   }
@@ -53,8 +51,7 @@ class Ball {
   display() {
     this.image.style.left = this.coordinates[0] - this.radius + "px";
     this.image.style.top = this.coordinates[1] - this.radius + "px";
-    this.image.style.height = 2 * this.radius + "px";
-    this.image.style.width = 2 * this.radius + "px";
+    this.image.style.width = this.image.style.height = 2 * this.radius + "px";
   }
   mass() {
     // density = 3 / 4pi
@@ -63,6 +60,11 @@ class Ball {
   clear() {
     balls.splice(balls.indexOf(this), 1);
     this.image.remove();
+  }
+  collideanimation() {
+    this.image.classList.remove("animated");
+    this.image.offsetWidth;
+    this.image.classList.add("animated");
   }
 }
 
@@ -115,12 +117,8 @@ function main() {
         }
 
         // color to red
-        ball1.image.classList.remove("animated");
-        ball1.image.offsetWidth;
-        ball1.image.classList.add("animated");
-        ball2.image.classList.remove("animated");
-        ball2.image.offsetWidth
-        ball2.image.classList.add("animated");
+        ball1.collideanimation();
+        ball2.collideanimation();
       }
 
       // gravitational force
