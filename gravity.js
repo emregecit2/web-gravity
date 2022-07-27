@@ -2,6 +2,8 @@ var DT = 1;
 var rightclick = false;
 var balls = [];
 var RADIUS = 20;
+// gravitational constant is increased for faster simulation
+const GRAVITATIONAL_CONSTANT = 1e-2
 
 class Ball {
   constructor(x, y) {
@@ -56,7 +58,7 @@ class Ball {
     this.image.style.width = 2 * this.radius + "px";
   }
   mass() {
-    return this.radius ** 3 / 20;
+    return this.radius ** 3;
   }
   clear() {
     balls.splice(balls.indexOf(this), 1);
@@ -125,7 +127,7 @@ function main() {
       }
 
       // gravitational force
-      let force = math.multiply(vectorA, ball1.mass(), ball2.mass(), 1 / math.pow(distance, 3));
+      let force = math.multiply(vectorA, ball1.mass(), ball2.mass(), GRAVITATIONAL_CONSTANT / math.pow(distance, 3));
       ball1.force = math.add(ball1.force, force);
       ball2.force = math.subtract(ball2.force, force);
     }
