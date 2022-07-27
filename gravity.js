@@ -36,7 +36,7 @@ class Ball {
       this.velocity[0] = -this.velocity[0];
     }
     if (this.coordinates[0] + this.radius >= window.innerWidth) {
-      this.coordinates[0] = 2 * (window.innerWidth - this.radius) - this.coordinates[0]; // coordinate = coordinate - (width - radius)
+      this.coordinates[0] = 2 * (window.innerWidth - this.radius) - this.coordinates[0];
       this.velocity[0] = -this.velocity[0];
     }
     if (this.coordinates[1] - this.radius <= 0) {
