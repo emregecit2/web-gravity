@@ -1,4 +1,4 @@
-var DT = 0.1;
+var DT = 1;
 var rightclick = false;
 var balls = [];
 var RADIUS = 20;
