@@ -2,18 +2,20 @@ var RADIUS = 50;
 var heldball = null;
 
 document.onmousedown = function(event) {
+    console.log(event);
     cursor = [event];
     switch (event.button){
       case 0:
         ball = findBall(event);
         if (ball) {
-          ball.held = true;
+          ball.held = event;
           heldball = ball;
           return;
         }
 
         ball = new Ball(event.x, event.y);
         heldball = ball;
+        ball.held = event;
         break;
       case 2:
         rightclick = true;
@@ -40,7 +42,12 @@ document.onmousedown = function(event) {
         rightclick = false;
       }
   }
-  document.onmousemove = function (event) {cursor = [event];};
+  document.onmousemove = function (event) {
+    cursor = [event];
+    if (heldball) {
+      heldball.held = event;
+    }
+  };
   document.oncontextmenu = function (event) {
     event.preventDefault();
   }

@@ -7,7 +7,6 @@ class Ball {
     this.velocity = [0, 0];
     this.force = [0, 0];
     this.radius = RADIUS;
-    this.held = true;
     const ball = document.createElement("div");
     ball.className = "ball";
     ball.style.width = 2 * this.radius + "px";
@@ -21,7 +20,7 @@ class Ball {
   }
   move() {
     if (this.held) {
-      this.coordinates = [cursor[0].pageX, cursor[0].pageY];
+      this.coordinates = [this.held.pageX, this.held.pageY];
       this.velocity = [0, 0];
     }
     let acceleration = math.multiply(this.force, 1 / this.mass());

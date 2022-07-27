@@ -1,16 +1,14 @@
 var RADIUS = 50;
 
 document.ontouchstart = function (event) {
-  cursor = event.touches;
-  for (touch of event.touches) {
-    document.getElementById("info").innerHTML = document.getElementById("info").innerHTML + touch.identifier;
-  }
-  let ball = findBall(event);
+  cursor = event.changedTouches;
+  let ball = findBall(cursor[0]);
   if (ball) {
-    ball.held = true;
+    ball.held = event.changedTouches[0];
     return;
   }
   ball = new Ball(cursor[cursor.length - 1].pageX, cursor[cursor.length - 1].pageY);
+  ball.held = event.changedTouches[0];
 }
 
 document.ontouchend = function (event) {
@@ -20,7 +18,17 @@ document.ontouchend = function (event) {
     }
   }
 }
-document.ontouchmove = function (event) { cursor = event.touches; };
+document.ontouchmove = function (event) {
+  cursor = event.touches;
+  for (touch of event.changedTouches) {
+    for (ball of balls) {
+      if (ball.held && (ball.held.identifier == touch.identifier)) {
+        ball.held = touch;
+        console.log(ball.held);
+      }
+    }
+  }
+};
 document.oncontextmenu = function (event) {
   event.preventDefault();
 }
