@@ -46,22 +46,25 @@ class Ball {
       }
     }
     else{
+      var dx = 0, dy = 0;
       if (this.coordinates[0] - this.radius <= 0) {
-        this.coordinates[0] = 2 * this.radius - this.coordinates[0];
-        this.velocity[0] = -this.velocity[0];
+        dx += 2 * (this.radius - this.coordinates[0]);
+        this.velocity[0] = Math.abs(this.velocity[0]);
       }
       if (this.coordinates[0] + this.radius >= window.innerWidth) {
-        this.coordinates[0] = 2 * (window.innerWidth - this.radius) - this.coordinates[0];
-        this.velocity[0] = -this.velocity[0];
+        dx += 2 * (this.coordinates[0] + this.radius - window.innerWidth);
+        this.velocity[0] = -Math.abs(this.velocity[0]);
       }
       if (this.coordinates[1] - this.radius <= 0) {
-        this.coordinates[1] = 2 * this.radius - this.coordinates[1];
+        dy += 2 * (this.radius - this.coordinates[1]);
         this.velocity[1] = -this.velocity[1];
       }
       if (this.coordinates[1] + this.radius >= window.innerHeight) {
-        this.coordinates[1] = 2 * (window.innerHeight - this.radius) - this.coordinates[1];
+        dy += 2 * (this.coordinates[1] + this.radius - window.innerHeight);
         this.velocity[1] = -this.velocity[1];
       }
+      this.coordinates[0] += dx;
+      this.coordinates[1] += dy;
     }
   }
   display() {
