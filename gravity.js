@@ -29,42 +29,55 @@ class Ball {
     this.coordinates = math.add(this.coordinates, math.multiply(DT, this.velocity), math.multiply(DT ** 2, acceleration));
     this.velocity = math.add(this.velocity, math.multiply(acceleration, DT));
     this.force = [0, 0];
-
+    
     // reflecting from walls
-    if (this.held) {
+    if (!this.held) {
       if (this.coordinates[0] - this.radius <= 0) {
-        this.coordinates[0] = this.radius;
+        this.velocity[0] = math.abs(this.velocity[0]);
       }
-      if (this.coordinates[0] + this.radius >= window.innerWidth) {
-        this.coordinates[0] = window.innerWidth - this.radius;
+      if (window.innerWidth - this.coordinates[0] - this.radius <= 0) {
+        this.velocity[0] = -math.abs(this.velocity[0]);
       }
       if (this.coordinates[1] - this.radius <= 0) {
-        this.coordinates[1] = this.radius;
+        this.velocity[1] = math.abs(this.velocity[1]);
       }
-      if (this.coordinates[1] + this.radius >= window.innerHeight) {
-        this.coordinates[1] = window.innerHeight - this.radius;
+      if (window.innerHeight - this.coordinates[1] - this.radius <= 0) {
+        this.velocity[1] = -math.abs(this.velocity[1]);
       }
     }
-    else{
-      var dx = 0, dy = 0;
-      if (this.coordinates[0] - this.radius <= 0) {
-        dx += 2 * (this.radius - this.coordinates[0]);
-        this.velocity[0] = Math.abs(this.velocity[0]);
+    {
+      if (this.coordinates[0] <= this.radius && this.coordinates[0] + this.radius < window.innerWidth) {
+        if (2 * this.radius < window.innerWidth) {
+          this.coordinates[0] = this.radius;
+        }
+        else {
+          this.coordinates[0] = window.innerWidth - this.radius;
+        }
       }
-      if (this.coordinates[0] + this.radius >= window.innerWidth) {
-        dx += 2 * (this.coordinates[0] + this.radius - window.innerWidth);
-        this.velocity[0] = -Math.abs(this.velocity[0]);
+      else if (this.coordinates[0] >= window.innerWidth - this.radius && this.coordinates[0] > this.radius) {
+        if (window.innerWidth > 2 * this.radius) {
+          this.coordinates[0] = window.innerWidth - this.radius;
+        }
+        else {
+          this.coordinates[0] = this.radius;
+        }
       }
-      if (this.coordinates[1] - this.radius <= 0) {
-        dy += 2 * (this.radius - this.coordinates[1]);
-        this.velocity[1] = -this.velocity[1];
+      if (this.coordinates[1] <= this.radius && this.coordinates[1] + this.radius < window.innerHeight) {
+        if (2 * this.radius < window.innerHeight) {
+          this.coordinates[1] = this.radius;
+        }
+        else {
+          this.coordinates[1] = window.innerHeight - this.radius;
+        }
       }
-      if (this.coordinates[1] + this.radius >= window.innerHeight) {
-        dy += 2 * (this.coordinates[1] + this.radius - window.innerHeight);
-        this.velocity[1] = -this.velocity[1];
+      else if (this.coordinates[1] >= window.innerHeight - this.radius && this.coordinates[1] > this.radius) {
+        if (window.innerHeight > 2 * this.radius) {
+          this.coordinates[1] = window.innerHeight - this.radius;
+        }
+        else {
+          this.coordinates[1] = this.radius;
+        }
       }
-      this.coordinates[0] += dx;
-      this.coordinates[1] += dy;
     }
   }
   display() {
