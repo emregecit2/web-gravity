@@ -33,15 +33,19 @@ class Ball {
     // reflecting from walls
     if (!this.held) {
       if (this.coordinates[0] - this.radius <= 0) {
-        this.velocity[0] = math.abs(this.velocity[0]);
+        if (window.innerWidth - this.coordinates[0] <= this.radius)
+          this.velocity[0] = 0;
+        else this.velocity[0] = math.abs(this.velocity[0]);
       }
-      if (window.innerWidth - this.coordinates[0] - this.radius <= 0) {
+      else if (window.innerWidth - this.coordinates[0] - this.radius <= 0) {
         this.velocity[0] = -math.abs(this.velocity[0]);
       }
       if (this.coordinates[1] - this.radius <= 0) {
-        this.velocity[1] = math.abs(this.velocity[1]);
+        if (window.innerHeight - this.coordinates[1] <= this.radius)
+          this.velocity[1] = 0;
+        else this.velocity[1] = math.abs(this.velocity[1]);
       }
-      if (window.innerHeight - this.coordinates[1] - this.radius <= 0) {
+      else if (window.innerHeight - this.coordinates[1] - this.radius <= 0) {
         this.velocity[1] = -math.abs(this.velocity[1]);
       }
     }
