@@ -1,7 +1,7 @@
-var DT = 1;
-var rightclick = false;
-var balls = [];
-var RADIUS = 30;
+let DT = 1;
+let isRightClick = false;
+let balls = [];
+const RADIUS = 30;
 // gravitational constant is increased for faster simulation
 const GRAVITATIONAL_CONSTANT = 1e-2
 
@@ -16,7 +16,7 @@ class Ball {
     ball.style.height = ball.style.width = 2 * this.radius + "px";
     document.getElementById("canvas").appendChild(ball);
     this.image = ball;
-    this.collideanimation();
+    this.collideAnimation();
     this.display();
     balls.push(this);
   }
@@ -97,7 +97,7 @@ class Ball {
     balls.splice(balls.indexOf(this), 1);
     this.image.remove();
   }
-  collideanimation() {
+  collideAnimation() {
     this.image.classList.remove("animated");
     this.image.offsetWidth;
     this.image.classList.add("animated");
@@ -114,7 +114,7 @@ function findBall(event) {
 }
 
 function main() {
-  if (rightclick) {
+  if (isRightClick) {
     let ball = findBall(cursor);
     if (ball) {
       ball.clear();
@@ -133,28 +133,28 @@ function main() {
         var ball1 = balls[i], ball2 = balls[j];
       }
       let vectorA = math.subtract(ball2.coordinates, ball1.coordinates);
-      let distance_squared = math.sum(math.dotPow(vectorA, 2));
-      let distance = math.sqrt(distance_squared);
-      let distance_between_edges = distance - ball1.radius - ball2.radius;
+      let distanceSquared = math.sum(math.dotPow(vectorA, 2));
+      let distance = math.sqrt(distanceSquared);
+      let distanceBetweenEdges = distance - ball1.radius - ball2.radius;
 
-      if (distance_between_edges <= 0) {
+      if (distanceBetweenEdges <= 0) {
         // elastic collision
-        let vectorC = math.multiply(vectorA, math.subtract(ball1.velocity, ball2.velocity), vectorA, 2 / (distance_squared * (ball1.mass() + ball2.mass())));
+        let vectorC = math.multiply(vectorA, math.subtract(ball1.velocity, ball2.velocity), vectorA, 2 / (distanceSquared * (ball1.mass() + ball2.mass())));
         ball1.velocity = math.subtract(ball1.velocity, math.multiply(vectorC, ball2.mass()));
         ball2.velocity = math.add(ball2.velocity, math.multiply(vectorC, ball1.mass()));
         // push away
         if (ball1.held) {
-          ball2.coordinates = math.subtract(ball2.coordinates, math.multiply(vectorA, distance_between_edges / distance));
+          ball2.coordinates = math.subtract(ball2.coordinates, math.multiply(vectorA, distanceBetweenEdges / distance));
         }
         else {
-          let vectorB = math.multiply(vectorA, distance_between_edges / distance / (ball1.mass() + ball2.mass()));
+          let vectorB = math.multiply(vectorA, distanceBetweenEdges / distance / (ball1.mass() + ball2.mass()));
           ball1.coordinates = math.add(ball1.coordinates, math.multiply(ball2.mass(), vectorB));
           ball2.coordinates = math.subtract(ball2.coordinates, math.multiply(ball1.mass(), vectorB));
         }
 
         // color to red
-        ball1.collideanimation();
-        ball2.collideanimation();
+        ball1.collideAnimation();
+        ball2.collideAnimation();
       }
 
       // gravitational force
