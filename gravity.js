@@ -115,7 +115,7 @@ function findBall(event) {
 
 function main() {
   if (isRightClick) {
-    let ball = findBall(cursor);
+    let ball = findBall(cursor_);
     if (ball) {
       ball.clear();
     }

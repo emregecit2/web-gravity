@@ -1,10 +1,10 @@
 let heldBall = null;
 let lastCursor = null;
-let cursor = null;
+let cursor_ = null;
 
 document.onmousedown = function(event) {
-  lastCursor = cursor;
-    cursor = event;
+  lastCursor = cursor_;
+    cursor_ = event;
     switch (event.button){
       case 0:
         ball = findBall(event);
@@ -44,8 +44,8 @@ document.onmousedown = function(event) {
       }
   }
   document.onmousemove = function (event) {
-    lastCursor = cursor;
-    cursor = event;
+    lastCursor = cursor_;
+    cursor_ = event;
     if (heldBall) {
       heldBall.held = event;
     }
