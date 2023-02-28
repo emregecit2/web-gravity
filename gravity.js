@@ -1,9 +1,9 @@
 let DT = 1;
 let isRightClick = false;
 let balls = [];
-const RADIUS = 30;
+const RADIUS = 20;
 // gravitational constant is increased for faster simulation
-const GRAVITATIONAL_CONSTANT = 1e-2
+const GRAVITATIONAL_CONSTANT = 1e-3;
 
 class Ball {
   constructor(x, y) {
@@ -23,15 +23,18 @@ class Ball {
   move() {
     if (this.held) {
       this.coordinates = [this.held.pageX, this.held.pageY];
-      this.velocity = [0, 0];
+      // this.velocity = [0, 0];
     }
-    let acceleration = math.multiply(this.force, 1 / this.mass());
-    this.coordinates = math.add(this.coordinates, math.multiply(DT, this.velocity), math.multiply(DT ** 2, acceleration));
-    this.velocity = math.add(this.velocity, math.multiply(acceleration, DT));
+    else {
+      let acceleration = math.multiply(this.force, 1 / this.mass());
+      this.coordinates = math.add(this.coordinates, math.multiply(DT, this.velocity), math.multiply(DT ** 2, acceleration));
+      this.velocity = math.add(this.velocity, math.multiply(acceleration, DT));
+    }
+    
     this.force = [0, 0];
     
     // reflecting from walls
-    if (!this.held) {
+    {
       if (this.coordinates[0] - this.radius <= 0) {
         if (window.innerWidth - this.coordinates[0] <= this.radius)
           this.velocity[0] = 0;
@@ -115,10 +118,7 @@ function findBall(event) {
 
 function main() {
   if (isRightClick) {
-    let ball = findBall(cursor_);
-    if (ball) {
-      ball.clear();
-    }
+    findBall(cursor_)?.clear();
   }
 
   for (let i = 0; i < balls.length; i++) {

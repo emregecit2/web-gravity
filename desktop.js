@@ -7,16 +7,9 @@ document.onmousedown = function(event) {
     cursor_ = event;
     switch (event.button){
       case 0:
-        ball = findBall(event);
-        if (ball) {
-          ball.held = event;
-          heldBall = ball;
-          return;
-        }
-
-        ball = new Ball(event.x, event.y);
-        heldBall = ball;
-        ball.held = event;
+        heldBall = findBall(event) ?? new Ball(event.x, event.y);
+        heldBall = heldBall;
+        heldBall.held = event;
         break;
       case 2:
         isRightClick = true;
@@ -36,7 +29,6 @@ document.onmousedown = function(event) {
   document.onmouseup = function(event) {
     switch (event.button){
       case 0:
-        heldBall.velocity = [(event.x - lastCursor.x) / (event.timeStamp - lastCursor.timeStamp), (event.y - lastCursor.y) / (event.timeStamp - lastCursor.timeStamp)];
         heldBall.held = heldBall = null;
         break;
       case 2:
@@ -48,6 +40,7 @@ document.onmousedown = function(event) {
     cursor_ = event;
     if (heldBall) {
       heldBall.held = event;
+      heldBall.velocity = [(event.x - lastCursor.x) / (event.timeStamp - lastCursor.timeStamp), (event.y - lastCursor.y) / (event.timeStamp - lastCursor.timeStamp)];
     }
   };
   document.oncontextmenu = function (event) {
