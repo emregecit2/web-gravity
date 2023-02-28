@@ -29,5 +29,3 @@ document.ontouchmove = function (event) {
 document.oncontextmenu = function (event) {
   event.preventDefault();
 }
-
-setInterval(main, DT);
