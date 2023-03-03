@@ -1,0 +1,15 @@
+{
+    "name": "Gravity Simulator",
+    "short_name": "Gravity",
+    "start_url": "index.html",
+    "scope": "./",
+    "icons": [
+        {
+            "src": "favicon.ico",
+            "type": "image/png"
+        }
+    ],
+    "theme_color": "#ffd31d",
+    "background_color": "#333",
+    "display": "standalone"
+}
