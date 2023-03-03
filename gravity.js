@@ -3,7 +3,7 @@ let isRightClick = false;
 let balls = [];
 const RADIUS = 20;
 // gravitational constant is increased for faster simulation
-const GRAVITATIONAL_CONSTANT = 1e-3;
+const GRAVITATIONAL_CONSTANT = 1e-2;
 
 class Ball {
   constructor(x, y) {

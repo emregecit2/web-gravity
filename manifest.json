@@ -5,11 +5,16 @@
     "scope": "./",
     "icons": [
         {
+            "src": "circle-512.ico",
+            "type": "image/x-icon",
+            "sizes": "512x512"
+        },
+        {
             "src": "favicon.ico",
             "type": "image/png"
         }
     ],
-    "theme_color": "#ffd31d",
-    "background_color": "#333",
+    "theme_color": "white",
+    "background_color": "black",
     "display": "standalone"
 }
