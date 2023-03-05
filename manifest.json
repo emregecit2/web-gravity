@@ -5,13 +5,15 @@
     "scope": "./",
     "icons": [
         {
-            "src": "circle-512.ico",
-            "type": "image/x-icon",
+            "src": "images/circle-512.png",
+            "type": "image/png",
             "sizes": "512x512"
         },
         {
-            "src": "favicon.ico",
-            "type": "image/png"
+            "src": "images/maskable_icon_x512.png",
+            "type": "image/png",
+            "sizes": "512x512",
+            "purpose": "maskable"
         }
     ],
     "theme_color": "black",
