@@ -7,6 +7,7 @@ const GRAVITATIONAL_CONSTANT = 1e-2;
 
 class Ball {
   constructor(x, y) {
+    tutorial.classList.add("fade-out")
     this.coordinates = [x, y];
     this.velocity = [0, 0];
     this.force = [0, 0];
@@ -167,5 +168,7 @@ function main() {
   balls.forEach(ball => ball.move());
   balls.forEach(ball => ball.display());
 }
+
+let tutorial = document.getElementById("tutorial");
 
 setInterval(main, DT);

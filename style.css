@@ -17,3 +17,21 @@
         background-color: white;
     }
 }
+
+#tutorial {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: max-content;
+    height: max-content;
+    transform: translate(-50%, -50%);
+    border-radius: 10%;
+    overflow: hidden;
+    font-family: 'Roboto', sans-serif;
+    font-size: x-large;
+}
+
+.fade-out {
+    opacity: 0;
+    transition: opacity 2s;
+}

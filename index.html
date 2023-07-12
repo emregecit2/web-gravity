@@ -25,13 +25,22 @@
         }
     </script>
     <script rel="preconnect" src="https://unpkg.com/mathjs@11.0.1/lib/browser/math.js"></script>
-    <script src="gravity.js" rel="preload" as="script"></script>
     <link rel="stylesheet" href="style.css">
     <link rel="manifest" href="manifest.json">
 </head>
 
 <body style="overscroll-behavior: contain;">
+    <div id="tutorial">
+            <h1 style="text-align: center;">Gravity Simulator - Tutorial</h1>
+            <ul> 
+                <li>Click to add a planet</li>
+                <li>Click and drag to move a planet</li>
+                <li>Right click to remove a planet</li>
+                <li>Scroll to shrink or grow a planet</li>
+            </ul>
+    </div>
     <div id="canvas"></div>
 </body>
 
+<script src="gravity.js" rel="preload" as="script"></script>
 </html>
