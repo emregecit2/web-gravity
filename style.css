@@ -29,12 +29,11 @@
     overflow: hidden;
     font-family: 'Roboto', sans-serif;
     font-size: x-large;
+    user-select: none;
 }
 
 .fade-out {
     opacity: 0;
     transition: opacity 2s;
     display: none 2s;
-    user-select: none;
-    cursor: default;
 }
